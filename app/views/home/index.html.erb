@@ -1,0 +1,22 @@
+<% if current_user %>
+  Logged in as <%= current_user.email %>.
+  <%= link_to "Log Out", logout_path %>
+<% else %>
+  <%= link_to "Sign Up", signup_path %> or 
+  <%= link_to "Log In", login_path %>
+<% end %>
+<p id="notice"><%= notice %></p>
+
+<% @movies.each do |movie| %>
+  <iframe width="420" height="315"
+    src="<%= "https://www.youtube.com/embed/#{movie.uid}" %>">
+  </iframe>
+  <div>
+    <h5><%= movie.title %></h5>
+    <p>Description <%= movie.desc %></p>
+    <p>
+      <span class="glyphicon glyphicon glyphicon-thumbs-up"></span> <%= movie.likes %>
+      <span class="glyphicon glyphicon glyphicon-thumbs-down"></span> <%= movie.dislikes %>
+    </p>
+  </div>
+<% end %>
