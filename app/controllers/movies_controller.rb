@@ -27,7 +27,7 @@ class MoviesController < ApplicationController
     @movie = Movie.new(movie_params)
 
     video = Yt::Video.new url: movie_params['link']
-    byebug
+
     @movie.uid = video.id
     @movie.title = video.title
     @movie.desc = video.description
