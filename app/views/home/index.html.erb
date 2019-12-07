@@ -1,5 +1,6 @@
-<% if current_user %>
+<% if logged_in? %>
   Logged in as <%= current_user.email %>.
+  <%= link_to "Share A movie", share_path %>
   <%= link_to "Log Out", logout_path %>
 <% else %>
   <%= link_to "Sign Up", signup_path %> or 
@@ -17,6 +18,9 @@
     <p>
       <span class="glyphicon glyphicon glyphicon-thumbs-up"></span> <%= movie.likes %>
       <span class="glyphicon glyphicon glyphicon-thumbs-down"></span> <%= movie.dislikes %>
+      <% if logged_in? %>
+        <span class="glyphicon glyphicon glyphicon-thumbs-down"></span> Voted: <%= movie.voted %>
+      <% end %>
     </p>
   </div>
 <% end %>

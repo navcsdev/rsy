@@ -26,6 +26,11 @@ class MoviesController < ApplicationController
   def create
     @movie = Movie.new(movie_params)
 
+    if @movie.invalid?
+      render :new
+      return
+    end
+
     video = Yt::Video.new url: movie_params['link']
 
     @movie.uid = video.id
@@ -37,7 +42,7 @@ class MoviesController < ApplicationController
 
     respond_to do |format|
       if @movie.save
-        format.html { redirect_to @movie, notice: 'Movie was successfully created.' }
+        format.html { redirect_to '/', notice: 'Movie was successfully created.' }
         format.json { render :show, status: :created, location: @movie }
       else
         format.html { render :new }
