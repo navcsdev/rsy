@@ -16,10 +16,15 @@
     <h5><%= movie.title %></h5>
     <p>Description <%= movie.desc %></p>
     <p>
-      <span class="glyphicon glyphicon glyphicon-thumbs-up"></span> <%= movie.likes %>
-      <span class="glyphicon glyphicon glyphicon-thumbs-down"></span> <%= movie.dislikes %>
+      <span> Likes: </span> <%= movie.likes %>
+      <span> Dislikes: </span> <%= movie.dislikes %>
       <% if logged_in? %>
-        <span class="glyphicon glyphicon glyphicon-thumbs-down"></span> Voted: <%= movie.voted %>
+        <% if movie.voted == 'un_voted' %>
+          <%= link_to 'Vote Up', vote_movie_path(movie, voted: 'voted_up'), :method => :post %>
+          <%= link_to 'Vote Down', vote_movie_path(movie, voted: 'voted_down'), :method => :post %>
+        <% else %>
+          Voted: <%= movie.voted %>
+        <% end %>
       <% end %>
     </p>
   </div>

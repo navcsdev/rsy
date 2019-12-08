@@ -2,7 +2,11 @@ Rails.application.routes.draw do
   root 'home#index'
 
   resources :users, only: [:new, :create]
-  resources :movies, only: [:new, :create]
+  resources :movies, only: [:new, :create, :vote] do
+    member do
+      post 'vote'
+    end
+  end
   resources :sessions, only: [:new, :create, :destroy]
   
   get 'signup', to: 'users#new', as: 'signup'

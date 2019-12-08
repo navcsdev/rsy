@@ -24,21 +24,7 @@ class MoviesController < ApplicationController
   # POST /movies
   # POST /movies.json
   def create
-    @movie = Movie.new(movie_params)
-    @movie.sharers_id = current_user.id
-
-    if @movie.invalid?
-      render :new
-      return
-    end
-
-    video = Yt::Video.new url: movie_params['link']
-
-    @movie.uid = video.id
-    @movie.title = video.title
-    @movie.desc = video.description
-    @movie.likes = video.like_count
-    @movie.dislikes = video.dislike_count
+    @movie = MovieBuilder.call(movie_params, current_user)
 
     respond_to do |format|
       if @movie.save
@@ -73,6 +59,13 @@ class MoviesController < ApplicationController
       format.html { redirect_to movies_url, notice: 'Movie was successfully destroyed.' }
       format.json { head :no_content }
     end
+  end
+
+  def vote
+    movie = Movie.find_by_id(params[:id])
+    movie.voted = params[:voted]
+    movie.save
+    redirect_to '/'
   end
 
   private
