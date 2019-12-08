@@ -12,6 +12,6 @@ class CreateMovies < ActiveRecord::Migration[5.2]
 
       t.timestamps
     end
-    add_index :uid_sharers, [:sharers, :uid], unique: true
+    add_index :movies, [:sharers_id, :uid], unique: true
   end
 end

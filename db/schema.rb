@@ -12,6 +12,9 @@
 
 ActiveRecord::Schema.define(version: 2019_12_07_090825) do
 
+  # These are extensions that must be enabled in order to support this database
+  enable_extension "plpgsql"
+
   create_table "movies", force: :cascade do |t|
     t.string "title"
     t.string "link"
@@ -19,10 +22,11 @@ ActiveRecord::Schema.define(version: 2019_12_07_090825) do
     t.string "desc"
     t.integer "likes"
     t.integer "dislikes"
-    t.integer "sharers_id"
+    t.bigint "sharers_id"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.integer "voted", default: 0
+    t.index ["sharers_id", "uid"], name: "index_movies_on_sharers_id_and_uid", unique: true
     t.index ["sharers_id"], name: "index_movies_on_sharers_id"
   end
 

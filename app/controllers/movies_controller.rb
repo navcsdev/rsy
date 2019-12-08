@@ -25,6 +25,7 @@ class MoviesController < ApplicationController
   # POST /movies.json
   def create
     @movie = Movie.new(movie_params)
+    @movie.sharers_id = current_user.id
 
     if @movie.invalid?
       render :new
@@ -38,7 +39,6 @@ class MoviesController < ApplicationController
     @movie.desc = video.description
     @movie.likes = video.like_count
     @movie.dislikes = video.dislike_count
-    @movie.sharers_id = current_user.id
 
     respond_to do |format|
       if @movie.save
